@@ -45,7 +45,7 @@ router.get('/purchases', requireToken, (req, res, next) => {
 
 // create route
 router.post('/purchases', requireToken, (req, res, next) => {
-  // req.body.purchases.owner = req.user.id
+  req.body.purchases.owner = req.user.id
   Purchases.create(req.body.purchases)
     .then(purchases => {
       res.status(201).json({ purchases: purchases })
