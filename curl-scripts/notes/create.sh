@@ -1,5 +1,5 @@
 API="http://localhost:4741"
-URL_PATH="/purchases"
+URL_PATH="/notes"
 
 curl "${API}${URL_PATH}" \
   --include \
@@ -7,8 +7,9 @@ curl "${API}${URL_PATH}" \
   --header "Content-Type: application/json" \
   --header "Authorization: Bearer ${TOKEN}" \
   --data '{
-    "purchases": {
-      "name": "'"${NAME}"'",
-      "price": "'"${PRICE}"'"
+    "notes": {
+      "purchaseId": "'"${ID}"'",
+      "title": "'"${TITLE}"'",
+      "description": "'"${DESC}"'"
     }
   }'

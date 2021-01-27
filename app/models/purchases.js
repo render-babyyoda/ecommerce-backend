@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-
+const notesSchema = require('./notes')
 const purchasesSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -9,10 +9,7 @@ const purchasesSchema = new mongoose.Schema({
     type: Number,
     required: true
   },
-  description: {
-    type: String,
-    required: true
-  },
+  notes: [notesSchema],
   owner: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',

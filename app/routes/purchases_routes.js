@@ -29,16 +29,23 @@ const router = express.Router()
 // index route
 router.get('/purchases', requireToken, (req, res, next) => {
   Purchases.find()
-    .then(purchases => res.status(200).json({ purchases: purchases }))
+    // .then((purchases) => {
+    //   if (purchases.owner === req.user.id) {
+    //     return purchases
+    //   }
+    // })
+    .then(purchases => {
+      res.status(200).json({ purchases: purchases })
+    })
     .catch(next)
 })
 
 // create route
 router.post('/purchases', requireToken, (req, res, next) => {
-  req.body.purchases.owner = req.user.id
+  // req.body.purchases.owner = req.user.id
   Purchases.create(req.body.purchases)
     .then(purchases => {
-      res.status(201).json({ purchases: purchases.toObject() })
+      res.status(201).json({ purchases: purchases })
     })
     .catch(next)
 })
@@ -46,7 +53,6 @@ router.post('/purchases', requireToken, (req, res, next) => {
 // update route
 router.patch('/purchases/:id', requireToken, removeBlanks, (req, res, next) => {
   delete req.body.purchases.owner
-
   Purchases.findById(req.params.id)
     .then(handle404)
     .then(purchases => {
