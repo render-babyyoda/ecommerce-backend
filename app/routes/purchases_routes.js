@@ -29,11 +29,14 @@ const router = express.Router()
 // index route
 router.get('/purchases', requireToken, (req, res, next) => {
   Purchases.find()
-    // .then((purchases) => {
-    //   if (purchases.owner === req.user.id) {
-    //     return purchases
-    //   }
-    // })
+    .then((purchases) => {
+      for (let i = 0; i < purchases.length; i++) {
+        if (purchases[i].owner.toString() === req.user.id) {
+          console.log(purchases[i])
+          return purchases[i]
+        }
+      }
+    })
     .then(purchases => {
       res.status(200).json({ purchases: purchases })
     })
