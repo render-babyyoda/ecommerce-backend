@@ -28,20 +28,30 @@ const router = express.Router()
 
 // index route
 router.get('/purchases', requireToken, (req, res, next) => {
-  Purchases.find()
+  Purchases.find({ owner: req.user.id })
     .then((purchases) => {
-      for (let i = 0; i < purchases.length; i++) {
-        if (purchases[i].owner.toString() === req.user.id) {
-          console.log(purchases[i])
-          return purchases[i]
-        }
-      }
+      return purchases.map(purchase => purchase.toObject())
     })
     .then(purchases => {
       res.status(200).json({ purchases: purchases })
     })
     .catch(next)
 })
+// router.get('/purchases', requireToken, (req, res, next) => {
+//   Purchases.find()
+//     .then((purchases) => {
+//       for (let i = 0; i < purchases.length; i++) {
+//         if (purchases[i].owner.toString() === req.user.id) {
+//           console.log(purchases[i])
+//           return purchases[i]
+//         }
+//       }
+//     })
+//     .then(purchases => {
+//       res.status(200).json({ purchases: purchases })
+//     })
+//     .catch(next)
+// })
 
 // create route
 router.post('/purchases', requireToken, (req, res, next) => {
