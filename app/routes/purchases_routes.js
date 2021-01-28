@@ -76,4 +76,14 @@ router.patch('/purchases/:id', requireToken, removeBlanks, (req, res, next) => {
     .catch(next)
 })
 
+// show route
+router.get('/purchases/:id', requireToken, (req, res, next) => {
+  Purchases.findById(req.params.id)
+    // .then(console.log('show worked'))
+    .then(purchases => {
+      res.status(204).json({ purchases: purchases })
+    })
+    .catch(next)
+})
+
 module.exports = router
