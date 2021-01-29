@@ -81,7 +81,7 @@ router.get('/purchases/:id', requireToken, (req, res, next) => {
   Purchases.findById(req.params.id)
     // .then(console.log('show worked'))
     .then(purchases => {
-      res.status(204).json({ purchases: purchases })
+      res.status(200).json({ purchases: purchases })
     })
     .catch(next)
 })
