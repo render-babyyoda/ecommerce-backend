@@ -1,12 +1,29 @@
 const express = require('express')
 const router = express.Router()
 const Purchases = require('../models/purchases')
+// const notesSchema = require('../models/notes')
 const passport = require('passport')
 const customErrors = require('../../lib/custom_errors')
 const handle404 = customErrors.handle404
 // const requireOwnership = customErrors.requireOwnership
 const requireToken = passport.authenticate('bearer', { session: false })
 // const removeBlanks = require('../../lib/remove_blank_fields')
+
+router.get('/:purchaseId/notes', requireToken, (req, res, next) => {
+  Purchases.find({_id: req.params.purchaseId})
+    .then((purchase) => {
+      let notes = purchase[0].notes
+      return notes
+    })
+    .then((notes) => {
+      console.log(notes)
+      return notes.map(notes => notes)
+    })
+    .then(notes => {
+      res.status(200).json({ notes: notes })
+    })
+    .catch(next)
+})
 
 // create a note
 router.post('/notes', requireToken, (req, res, next) => {
