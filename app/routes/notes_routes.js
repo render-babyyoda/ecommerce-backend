@@ -9,8 +9,8 @@ const handle404 = customErrors.handle404
 const requireToken = passport.authenticate('bearer', { session: false })
 // const removeBlanks = require('../../lib/remove_blank_fields')
 
-router.get('/:purchaseId/notes', requireToken, (req, res, next) => {
-  Purchases.find({_id: req.params.purchaseId})
+router.get('/:id/notes', requireToken, (req, res, next) => {
+  Purchases.find({_id: req.params.id})
     .then((purchase) => {
       let notes = purchase[0].notes
       return notes
