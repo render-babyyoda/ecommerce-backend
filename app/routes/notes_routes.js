@@ -16,7 +16,6 @@ router.get('/:id/notes', requireToken, (req, res, next) => {
       return notes
     })
     .then((notes) => {
-      console.log(notes)
       return notes.map(notes => notes)
     })
     .then(notes => {

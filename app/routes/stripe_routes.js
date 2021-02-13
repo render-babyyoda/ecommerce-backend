@@ -8,8 +8,6 @@ const router = express.Router()
 
 router.post('/checkout', (req, res, next) => {
   const { cookie, token } = req.body
-  console.log('Product is', cookie)
-  console.log('Product Name ', cookie.name)
   const idempotencyKey = uuidV4()
 
   // return a created customer from stripe
